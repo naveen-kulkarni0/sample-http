@@ -12,6 +12,4 @@ class MessageService(val db: MessageRepository) {
     fun post(message: Message) {
         db.save(message)
     }
-
-
 }

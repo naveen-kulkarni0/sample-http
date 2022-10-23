@@ -6,6 +6,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
+    id("com.diffplug.spotless") version "6.1.1"
 }
 
 group = "org.example"
@@ -25,14 +26,12 @@ dependencies {
     implementation("org.springframework.data:spring-data-jdbc:2.4.5")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test"){
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.vintage", "junit-vintage-engine")
         exclude("org.mockito", "mockito-core")
-
     }
     runtimeOnly("com.h2database:h2:2.1.214")
     testImplementation("com.ninja-squad:springmockk:3.1.1")
-
 }
 
 tasks.test {
@@ -41,4 +40,15 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+spotless { // if you are using build.gradle.kts, instead of 'spotless {' use:
+    // configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    kotlin {
+        ktlint() // has its own section below
+    }
+    kotlinGradle {
+        target("*.gradle.kts") // default target for kotlinGradle
+        ktlint()
+    }
 }

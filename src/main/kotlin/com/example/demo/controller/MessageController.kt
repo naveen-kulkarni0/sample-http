@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-//Constructor injection style in kotlin
+// Constructor injection style in kotlin
 class MessageController(val messageService: MessageService) {
     @GetMapping("/all")
-    fun getAllMessages(): List<Message> = messageService.findMessages();
+    fun getAllMessages(): List<Message> = messageService.findMessages()
 
     @PostMapping("/create")
     fun createMessage(@RequestBody message: Message) {

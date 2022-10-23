@@ -13,7 +13,7 @@ class MessageServiceTest {
     private val messageService: MessageService = MessageService(messageRepository)
 
     @Test
-    fun should_return_message_list_when_called(){
+    fun should_return_message_list_when_fineMessages_is_called(){
         //given
         val messages:List<Message> = listOf(
             Message("1","Hello"),
@@ -28,5 +28,18 @@ class MessageServiceTest {
         verify(exactly = 1) { messageRepository.findMessages() }
         assertEquals(messages, result)
 
+    }
+
+    @Test
+    fun should_create_message_when_dbSave_is_called(){
+        //given
+        val message =  Message("1","Hello")
+        every { messageRepository.save(any()) } returns message
+
+        //when
+        val result = messageService.post(message)
+
+        //then
+        verify(exactly = 1) { messageRepository.save(any()) }
     }
 }
